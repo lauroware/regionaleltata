@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Catálogo El Tata - Artesanías</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: #0e0e0e;
+            border-radius: 24px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            overflow: hidden;
+            padding: 20px 25px 40px 25px;
+        }
+
+        .gold-text {
+            color: #D4AF37;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #D4AF37;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+        }
+        .header h1 {
+            font-size: 2.8rem;
+            letter-spacing: 4px;
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, #FFFFFF 30%, #D4AF37 80%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 1rem;
+            color: #cccccc;
+            margin-top: 8px;
+        }
+        .subrayado {
+            width: 100px;
+            height: 2px;
+            background: #D4AF37;
+            margin: 10px auto;
+        }
+
+        .nav-categorias {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 15px;
+        }
+        .cat-btn {
+            background: #1a1a1a;
+            border: 1px solid #D4AF37;
+            padding: 6px 14px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #D4AF37;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .cat-btn:hover, .cat-btn.active {
+            background: #D4AF37;
+            color: #0a0a0a;
+            border-color: #D4AF37;
+        }
+
+        .catalogo-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .grid-header {
+            display: grid;
+            grid-template-columns: 100px 1fr 180px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #111111 100%);
+            border-radius: 12px 12px 0 0;
+            font-weight: bold;
+            padding: 12px 10px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #D4AF37;
+            border-bottom: 2px solid #D4AF37;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .grid-item {
+            display: grid;
+            grid-template-columns: 100px 1fr 180px;
+            background-color: #111111;
+            border-bottom: 1px solid #222222;
+            padding: 12px 10px;
+            transition: background 0.2s;
+            align-items: center;
+        }
+        .grid-item:hover {
+            background-color: #1a1a1a;
+        }
+
+        .producto-codigo {
+            font-weight: bold;
+            font-size: 1rem;
+            color: #D4AF37;
+            font-family: monospace;
+        }
+        .producto-detalle {
+            font-size: 0.95rem;
+            padding-right: 10px;
+            line-height: 1.35;
+            color: #e0e0e0;
+        }
+        .producto-foto {
+            background-color: #1a1a1a;
+            border: 1px solid #333333;
+            border-radius: 12px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            overflow: hidden;
+        }
+        .producto-foto img {
+            max-width: 100%;
+            max-height: 78px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .sin-foto {
+            font-size: 0.7rem;
+            color: #666666;
+            text-align: center;
+        }
+
+        .footer-note {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #666666;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            padding-top: 20px;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            z-index: 1000;
+            font-family: 'Inter', sans-serif;
+            transition: transform 0.2s;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.03);
+            background-color: #20b859;
+            color: white;
+        }
+
+        @media (max-width: 700px) {
+            .grid-header, .grid-item {
+                grid-template-columns: 70px 1fr 130px;
+            }
+            .producto-codigo {
+                font-size: 0.85rem;
+            }
+            .producto-detalle {
+                font-size: 0.8rem;
+            }
+            .container {
+                padding: 12px;
+            }
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>EL TATA</h1>
+        <p>Solicitame el Whatsapp nuestra lista de precios</p>
+        <div class="subrayado"></div>
+        <p style="font-size:0.85rem; margin-top:8px; color:#888;"></p>
+    </div>
+
+    <div class="nav-categorias" id="filtros">
+        <button class="cat-btn active" data-cat="todos">📦 TODOS</button>
+        <button class="cat-btn" data-cat="mates"> MATES</button>
+        <button class="cat-btn" data-cat="bombillas"> BOMBILLAS</button>
+        <button class="cat-btn" data-cat="talabarteria"> TALABARTERÍA</button>
+        <button class="cat-btn" data-cat="rastras"> RASTRAS & CINTOS</button>
+        <button class="cat-btn" data-cat="ponchos"> PONCHOS & INDUMENTARIA</button>
+        <button class="cat-btn" data-cat="accesorios"> ACCESORIOS</button>
+        <button class="cat-btn" data-cat="hogar"> HOGAR & REGALOS</button>
+    </div>
+
+    <div class="catalogo-grid">
+        <div class="grid-header">
+            <div>N°</div>
+            <div>DETALLE DEL PRODUCTO</div>
+            <div>FOTO</div>
+        </div>
+        <div id="productos-lista"></div>
+    </div>
+    <div class="footer-note">
+        🧉 Productos artesanales · Calidad garantizada
+    </div>
+</div>
+
+<a href="https://wa.me/5491141459631?text=Hola%20El%20Tata,%20quiero%20consultar%20por%20un%20producto%20del%20catálogo" 
+   class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
+</a>
+
+<script>
+    // ============================================================
+    // 📸 ACÁ PONÉ VOS LAS URL DE LAS FOTOS
+    // ============================================================
+    const fotosProductos = {
+        // MATES
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "6": "",
+        "7": "",
+        "8": "",
+        "9": "",
+        "10": "",
+        "11": "",
+        "12": "",
+        "13": "",
+        "14": "",
+        "15": "",
+        "16": "",
+        "17": "",
+        "18": "",
+        "19": "",
+        "20": "",
+        "21": "",
+        "22": "",
+        "24": "",
+        "25": "",
+        // BOMBILLAS
+        "26": "",
+        "27": "",
+        "28": "",
+        "29": "",
+        "30": "",
+        "32": "",
+        "33": "",
+        "34": "",
+        "35": "",
+        "36": "",
+        // TALABARTERIA Y OTROS (podés ir agregando)
+        "42": "",
+        "43": "",
+        "44": "",
+        "45": "",
+        "46": "",
+        "47": "",
+        "48": "",
+        "49": "",
+        "50": "",
+        "51": "",
+        "52": "",
+        "53": "",
+        "54": "",
+        "55": "",
+        "56": "",
+        "57": "",
+        "58": "",
+        "59": "",
+        "60": "",
+        "61": "",
+        "62": "",
+        "63": "",
+        "64": "",
+        "65": "",
+        "66": "",
+        "67": "",
+        "68": "",
+        "69": "",
+        "70": "",
+        "71": "",
+        "72": "",
+        "73": "",
+        "74": "",
+        "76": "",
+        "77": "",
+        "78": "",
+        "79": "",
+        "80": "",
+        "81": "",
+        "82": "",
+        "83": "",
+        "84": "",
+        "85": "",
+        "86": "",
+        "87": "",
+        "88": "",
+        "89": "",
+        "90": "",
+        "91": "",
+        "92": "",
+        "93": "",
+        "94": "",
+        "95": "",
+        "96": "",
+        "97": "",
+        "98": "",
+        "99": "",
+        "100": "",
+        "101": "",
+        "105": "",
+        "106": "",
+        "107": "",
+        "108": "",
+        "109": "",
+        "110": "",
+        "111": "",
+        "112": "",
+        "113": "",
+        "114": "",
+        "115": "",
+        "116": "",
+        "117": "",
+        "118": "",
+        "119": "",
+        "120": "",
+        "121": "",
+        "122": "",
+        "123": "",
+        "124": "",
+        "125": "",
+        "126": "",
+        "127": "",
+        "128": "",
+        "129": "",
+        "130": "",
+        "131": "",
+        "132": "",
+        "133": "",
+        "140": "",
+        "141": "",
+        "142": "",
+        "143": "",
+        "144": "",
+        "145": "",
+        "146": "",
+        "147": "",
+        "148": "",
+        "149": "",
+        "150": "",
+        "151": "",
+        "152": "",
+        "153": "",
+        "154": "",
+        "155": "",
+        "156": "",
+        "157": "",
+        "158": "",
+        "159": "",
+        "160": "",
+        "161": "",
+        "162": "",
+        "163": "",
+        "164": "",
+        "165": "",
+        "166": "",
+        "167": "",
+        "168": "",
+        "169": "",
+        "170": "",
+        "171": "",
+        "172": "",
+        "173": "",
+        "174": "",
+        "175": "",
+        "176": "",
+        "177": "",
+        "178": "",
+        "179": "",
+        "180": "",
+        "181": "",
+        "182": "",
+        "183": "",
+        "184": "",
+        "185": "",
+        "186": "",
+        "187": "",
+        "188": "",
+        "189": "",
+        "190": "",
+        "191": "",
+        "192": "",
+        "193": "",
+        "194": "",
+        "195": "",
+        "196": "",
+        "197": "",
+        "198": "",
+        "199": "",
+        "200": "",
+        "201": "",
+        "202": "",
+        "203": "",
+        "204": "",
+        "205": "",
+        "206": "",
+        "207": "",
+        "208": "",
+        "209": "",
+        "210": "",
+        "211": "",
+        "212": "",
+        "213": "",
+        "214": "",
+        "215": "",
+        "216": "",
+        "217": "",
+        "218": "",
+        "219": "",
+        "220": "",
+        "221": "",
+        "222": "",
+        "223": "",
+        "224": "",
+        "225": "",
+        "226": "",
+        "227": "",
+        "228": "",
+        "229": "",
+        "230": "",
+        "231": "",
+        "232": ""
+    };
+
+    // DATOS DEL CATÁLOGO (mismo que antes)
+    const productosRaw = [
+        { codigo: "1", detalle: "MATE IMPERIAL DE ALPACA LISA", cat: "mates" },
+        { codigo: "2", detalle: "MATE IMPERIAL ALPACA CINCELADA", cat: "mates" },
+        { codigo: "3", detalle: "MATE IMPERIAL PIES DE METAL", cat: "mates" },
+        { codigo: "4", detalle: "MATE DE CALABAZA, FLEJE DE ALPACA ESTAMPADO", cat: "mates" },
+        { codigo: "5", detalle: "MATE CAMIONERO, VIROLA DE ACERO", cat: "mates" },
+        { codigo: "6", detalle: "MATE IMPERIAL DE ALGARROBO Y ACERO", cat: "mates" },
+        { codigo: "7", detalle: "MATE CAMIONERO, CALABAZA FORRADO EN VAQUETA", cat: "mates" },
+        { codigo: "8", detalle: "MATE DE CAÑA, DETALLE EN BRONCE CON BOMBILLA DE CAÑA NATURAL, PALABRA DE ARGENTINA", cat: "mates" },
+        { codigo: "9", detalle: "MATE DE ALGARROBO CINCELADO", cat: "mates" },
+        { codigo: "10", detalle: "MATE DE ALGARROBO FORRADO CON DIJE Y PAMPA", cat: "mates" },
+        { codigo: "11", detalle: "MATE DE ALGARROBO MEDIO FORRO CON DIJE", cat: "mates" },
+        { codigo: "12", detalle: "MATÉ DE ALGARROBO , CORTADO (ALUMINIO)", cat: "mates" },
+        { codigo: "13", detalle: "MATÉ DE CALABAZA SIN PULIR CON PIE DE METAL", cat: "mates" },
+        { codigo: "14", detalle: "MATÉ DE CALABAZA PULIDA, CON PIE DE METAL", cat: "mates" },
+        { codigo: "15", detalle: "MATÉ TORPEDO , CALABAZA FORRADA EN BAQUETA , VIROLA SIMPLE", cat: "mates" },
+        { codigo: "16", detalle: "MATÉ TORPEDO, VIROLA DE ACERO", cat: "mates" },
+        { codigo: "17", detalle: "MATÉ TORPEDO, VIROLA DE ALPACA CINCELADA", cat: "mates" },
+        { codigo: "18", detalle: "MATÉ CRIOLLO CALABAZA PULIDA Y BASE DE CUERO CRUDO", cat: "mates" },
+        { codigo: "19", detalle: "CAMIONERO DE ALGARROBO, VIROLA DE ACERO INOX", cat: "mates" },
+        { codigo: "20", detalle: "MATE DE ALGARROBO LISO", cat: "mates" },
+        { codigo: "21", detalle: "MATE DE CALABAZA SELECCIONADA CON PIES Y FLEJE LABRADO DE ALPACA", cat: "mates" },
+        { codigo: "22", detalle: "MATE PESUÑA CON INTERIOR DE CALABAZA", cat: "mates" },
+        { codigo: "24", detalle: "MATE DE PALOSANTO , DISTINTAS MEDIDAS", cat: "mates" },
+        { codigo: "25", detalle: "MATE DE ALGARROBO, TALLADO CON DETALLE EN BRONCE", cat: "mates" },
+        { codigo: "26", detalle: "BOMBILLA CHATA DE ACERO", cat: "bombillas" },
+        { codigo: "27", detalle: "BOMBILLA PICO DE LORO DE ACERO INOX 17CM", cat: "bombillas" },
+        { codigo: "28", detalle: "BOMBILLA, PICO DE LORO ACERO INOX 19CM", cat: "bombillas" },
+        { codigo: "29", detalle: "BOMBILLA DE ACERO INOX PICO DE LORO CON TAMBOR, COLOR BRONCE", cat: "bombillas" },
+        { codigo: "30", detalle: "BOMBILLA PICO DE LORO, DOBLE CAÑO, TAMBOR DESARMABLE DE ACERO INOX", cat: "bombillas" },
+        { codigo: "32", detalle: "BOMBILLA ESTRIBO CON DIJE SURTIDO, BRONCE NIQUELADO", cat: "bombillas" },
+        { codigo: "33", detalle: "BOMBILLA EXAGONAL DE ACERO CON TAMBOR DE BRONCE NIKELADO", cat: "bombillas" },
+        { codigo: "34", detalle: "BOMBILLA CHATA BRASILERA O DIJE SURTIDO MARCA ALPACA", cat: "bombillas" },
+        { codigo: "35", detalle: "BOMBILLA ESTRIBO DE ALPACA ARTESANAL , CON DIJES SURTIDOS", cat: "bombillas" },
+        { codigo: "36", detalle: "BOMBILLA PICO DE LORO TORNEADA O LISAS MARCA ALPACA (BRASIL)", cat: "bombillas" },
+        { codigo: "42", detalle: "BRACERO GRANDE CON COSTURA AL BORDE", cat: "talabarteria" },
+        { codigo: "43", detalle: "ENTACONADO DE ALPACA", cat: "accesorios" },
+        { codigo: "44", detalle: "CARPINCHO O CUERO CRUDO CON MEDALLA SURTIDA", cat: "accesorios" },
+        { codigo: "45", detalle: "MOSQUETON CON COSTURA AL BORDE Y DUE", cat: "accesorios" },
+        { codigo: "46", detalle: "MOSQUETON DE CUERO CRUDO", cat: "accesorios" },
+        { codigo: "47", detalle: "BOLEADORITA", cat: "accesorios" },
+        { codigo: "48", detalle: "CUERO , MAPA DE ARGENTINA", cat: "accesorios" },
+        { codigo: "49", detalle: "MEDALLA SURTIDA CON SOLAPA Y TRENZA CHATA", cat: "accesorios" },
+        { codigo: "50", detalle: "MOSQUETON DE CUERO CRUDO, BOTON EN TIENTO Y COSTURA AL BORDE", cat: "accesorios" },
+        { codigo: "51", detalle: "LLAVERO SOLAPA CON CUERO DE PELO Y PRESILLA", cat: "accesorios" },
+        { codigo: "52", detalle: "MOSQUETON LISO Y PAMPA", cat: "accesorios" },
+        { codigo: "53", detalle: "MOSQUETON CON DIJE (CUERO NEGRO O CHOCOLATE)", cat: "accesorios" },
+        { codigo: "54", detalle: "MOSQUETON DE CUERO CON PELO", cat: "accesorios" },
+        { codigo: "55", detalle: "ESTRIBO CON TRENZA DE 8 Y PASADOR DE ALPACA", cat: "accesorios" },
+        { codigo: "56", detalle: "LLAVERO DE ARGENTINA CON TRENZA DE 4", cat: "accesorios" },
+        { codigo: "57", detalle: "BRACERO CHICO CON TRENZA DE 8 Y PASADOR DE ALPACA", cat: "accesorios" },
+        { codigo: "58", detalle: "SOLAPA , MEDALLA SURTIDAS", cat: "accesorios" },
+        { codigo: "59", detalle: "ESTRIBO DE CUERO Y DIJE SURTIDO", cat: "accesorios" },
+        { codigo: "60", detalle: "CUERO DE PELO CON DIJES", cat: "accesorios" },
+        { codigo: "61", detalle: "DENARIO CON CRUZ DE COLOR", cat: "accesorios" },
+        { codigo: "62", detalle: "DENARIO LA CHECHU", cat: "accesorios" },
+        { codigo: "63", detalle: "ESPUELA CON PASADOR DE ALPACA", cat: "accesorios" },
+        { codigo: "64", detalle: "FRENO CON PASADOR DE ALPACA", cat: "accesorios" },
+        { codigo: "65", detalle: "REVENQUE DE METAL CON PASADOR DE ALPACA", cat: "accesorios" },
+        { codigo: "66", detalle: "LACITO", cat: "accesorios" },
+        { codigo: "67", detalle: "REVENQUE", cat: "accesorios" },
+        { codigo: "68", detalle: "TACO DE POLO", cat: "accesorios" },
+        { codigo: "69", detalle: "CUENTAGANADO, TRENZA DE 8 TIENTOS, PASADOR DE ALPACA Y PRESILLAS DE COSTURA AL BORDE", cat: "accesorios" },
+        { codigo: "70", detalle: "CUENTAGANADO TRENZADO, PASADOR DE TIENTO", cat: "accesorios" },
+        { codigo: "71", detalle: "CUENTAGANADO CON TRENZA DE 8, PASADOR DE ALPACA Y PRESILLAS LISAS", cat: "accesorios" },
+        { codigo: "72", detalle: "CUENTAGANADO CON TRENZA DE 8 TIENTOS y perlas DE METAL", cat: "accesorios" },
+        { codigo: "73", detalle: "LONJAS CRUDAS", cat: "talabarteria" },
+        { codigo: "74", detalle: "CINTO TRENZADO DE CUERO CRUDO", cat: "rastras" },
+        { codigo: "76", detalle: "CUERO CALADO DE 4 CM", cat: "rastras" },
+        { codigo: "77", detalle: "CUERO CALADO (HOJAS) PASE 3,5CM", cat: "rastras" },
+        { codigo: "78", detalle: "CUERO GRUPON LISO PASE 4CM", cat: "rastras" },
+        { codigo: "79", detalle: "CUERO GRUPON LISO PASE 3,5CM", cat: "rastras" },
+        { codigo: "80", detalle: "CUERO GRUPON LISO PASE 3CM", cat: "rastras" },
+        { codigo: "81", detalle: "CUERO GRUPON , CON COSTURA DE MAQUINA PASE 3,5CM", cat: "rastras" },
+        { codigo: "82", detalle: "CUERO CON GUARDA PAMPA , PASE 3,5 CM", cat: "rastras" },
+        { codigo: "83", detalle: "DE CUERO , TRABAJADO EN TIENTO PASE 3,5CM", cat: "rastras" },
+        { codigo: "84", detalle: "3 ROMBOS ,BORDADOS CON HILO. PASE 3,5CM", cat: "rastras" },
+        { codigo: "85", detalle: "CUERO CRUDO BORDADO COMPLETO PASE 3,5CM", cat: "rastras" },
+        { codigo: "86", detalle: "CUERO GRUPON , BORDADO COMPLETO CON HILO ENSERADO PASE 3,5CM", cat: "rastras" },
+        { codigo: "87", detalle: "CUERO GRUPON DOBLE BORDADO", cat: "rastras" },
+        { codigo: "88", detalle: "ROSARIO DE 4 TIENTOS", cat: "accesorios" },
+        { codigo: "89", detalle: "ROSARIO DE TRENZA DE 8 Y ALPACA", cat: "accesorios" },
+        { codigo: "90", detalle: "DENARIO DE CUELLO TRENZA DE 4 REDONDA", cat: "accesorios" },
+        { codigo: "91", detalle: "DENARIO DE CUELLO EMBOSALADO", cat: "accesorios" },
+        { codigo: "92", detalle: "DENARIO DE MANO SIMPLE", cat: "accesorios" },
+        { codigo: "93", detalle: "DENARIO DE MANO CON CRUZ DE COLOR", cat: "accesorios" },
+        { codigo: "94", detalle: "DENARIO DE MANO EMBOSALDO", cat: "accesorios" },
+        { codigo: "95", detalle: "GARGANTILLA DE 4 TIENTOS Y DIJE SURTIDO", cat: "accesorios" },
+        { codigo: "96", detalle: "PULSERA CHATA CON DIJE SURTIDO", cat: "accesorios" },
+        { codigo: "97", detalle: "PULSERA ESLABON DE 4 TIENTOS", cat: "accesorios" },
+        { codigo: "98", detalle: "PULSERA DE 8 TIENTOS CON PERLA Y BOTON", cat: "accesorios" },
+        { codigo: "99", detalle: "PULSERA LACITO", cat: "accesorios" },
+        { codigo: "100", detalle: "PULSERA DE CUERO CON PELO, DOBLE, DIJES VARIOS Y HEBILLA DE METAL", cat: "accesorios" },
+        { codigo: "101", detalle: "PULSERA DE CUERO GRUDO, DOBLES, DIJE SURTIDO Y HEBILLA DE METAL", cat: "accesorios" },
+        { codigo: "105", detalle: "PULSERA DE CARPINCHO CON DIJE Y HEBILLA DE METAL", cat: "accesorios" },
+        { codigo: "106", detalle: "PULSERA DE CUERO CRUDO CON DIJE Y HEBILLA DE METAL", cat: "accesorios" },
+        { codigo: "107", detalle: "MUÑEQUERA DE TACHAS 6CM NEGRA O MARRON", cat: "accesorios" },
+        { codigo: "108", detalle: "MUÑEQUERA DE 3CM CON TACHAS O COSTURA DE MAQUINA , NEGRA O MARRON", cat: "accesorios" },
+        { codigo: "109", detalle: "PULSERA DE ALPACA Y ASTA DIJES SURTIDOS", cat: "accesorios" },
+        { codigo: "110", detalle: "PULSERA DE ALPACA Y ASTA CON INICIALES", cat: "accesorios" },
+        { codigo: "111", detalle: "PULSERA DE ALPACA Y CON DIJE CALADO (VARIOS MOTIVOS)", cat: "accesorios" },
+        { codigo: "112", detalle: "PULSERA POLO", cat: "accesorios" },
+        { codigo: "113", detalle: "PULSERA ESCLABA CON DETALLE EN BRONCE ( VARIOS MOTIVOS )", cat: "accesorios" },
+        { codigo: "114", detalle: "CABEZADA Y RIENDA SIMPLE DE CUERO CRUDO", cat: "talabarteria" },
+        { codigo: "115", detalle: "CABEZADA Y RIENDA DOBLE EN CUERO CRUDO", cat: "talabarteria" },
+        { codigo: "116", detalle: "ENSIMERA DE CUERO CRUDO", cat: "talabarteria" },
+        { codigo: "117", detalle: "REVENQUE DOBLE ARGOLLA", cat: "talabarteria" },
+        { codigo: "118", detalle: "REVENQUE GRANDE", cat: "talabarteria" },
+        { codigo: "119", detalle: "REVENQUE CHICO", cat: "talabarteria" },
+        { codigo: "120", detalle: "BOLEADORA DE CUERO CRUDO", cat: "talabarteria" },
+        { codigo: "121", detalle: "FUSTA CHICA", cat: "talabarteria" },
+        { codigo: "122", detalle: "FUSTA MEDIANA", cat: "talabarteria" },
+        { codigo: "123", detalle: "FUSTA GRANDE", cat: "talabarteria" },
+        { codigo: "124", detalle: "LATIGO CHICO", cat: "talabarteria" },
+        { codigo: "125", detalle: "LATIGO GRANDE", cat: "talabarteria" },
+        { codigo: "126", detalle: "ESTRIBO MILITAR DE CUERO CRUDO", cat: "talabarteria" },
+        { codigo: "127", detalle: "ESTRIBO SIMPLE DE CUERO CRUDO", cat: "talabarteria" },
+        { codigo: "128", detalle: "RASTRA DE PELO CON MONEDAS N°1", cat: "rastras" },
+        { codigo: "129", detalle: "RASTRA DE PELO CON MONEDAS N°2", cat: "rastras" },
+        { codigo: "130", detalle: "RASTRA DE PELO DE MONEDAS N°3", cat: "rastras" },
+        { codigo: "131", detalle: "RASTRA DE PELO CON MONEDAS N°4", cat: "rastras" },
+        { codigo: "132", detalle: "RASTRA DE PELO CON MONEDAS N°5", cat: "rastras" },
+        { codigo: "133", detalle: "RASTRA LISA NEGRA N°1", cat: "rastras" },
+        { codigo: "140", detalle: "TIRADOR PAMPA CON PUNTERA DE CUERO CARPINCHO Y 4 HEBILLAS", cat: "accesorios" },
+        { codigo: "141", detalle: "SURENO DE PAÑO ALA 8", cat: "ponchos" },
+        { codigo: "142", detalle: "NORTENO DE PAÑO ALA 10", cat: "ponchos" },
+        { codigo: "143", detalle: "AUSTRALIANO DE CUERO NEGRO O MARRON", cat: "ponchos" },
+        { codigo: "144", detalle: "AUSTRALIANO DE CUERO ESTAMPADO EN CARPINCHO", cat: "ponchos" },
+        { codigo: "145", detalle: "AUSTRALIANO DE RAFIA", cat: "ponchos" },
+        { codigo: "146", detalle: "SOMBRERO DE GAUCHO DE RAFIA", cat: "ponchos" },
+        { codigo: "147", detalle: "GORRA DE YUTE Y CUERO", cat: "ponchos" },
+        { codigo: "148", detalle: "BOINA DE CUERO", cat: "ponchos" },
+        { codigo: "149", detalle: "BOINA DE PAÑO", cat: "ponchos" },
+        { codigo: "150", detalle: "BOINA DE YUTE", cat: "ponchos" },
+        { codigo: "151", detalle: "BOINA CLASICA", cat: "ponchos" },
+        { codigo: "152", detalle: "RETRANCA DE ALPACA", cat: "accesorios" },
+        { codigo: "153", detalle: "JUEGO DE TOQUILLA Y BARBIJO TRENZADO TEXTIL", cat: "accesorios" },
+        { codigo: "154", detalle: "FAJA DE 6CM", cat: "accesorios" },
+        { codigo: "155", detalle: "FAJA DE 9 CM", cat: "accesorios" },
+        { codigo: "156", detalle: "FAJA DE 11CM", cat: "accesorios" },
+        { codigo: "157", detalle: "BOINA DE HILO VUELO 30CM", cat: "ponchos" },
+        { codigo: "158", detalle: "BOINA DE HILO VUELO 32CM", cat: "ponchos" },
+        { codigo: "159", detalle: "BOINA DE HILO VUELO 36CM", cat: "ponchos" },
+        { codigo: "160", detalle: "BOINA DE PAÑO 32CM", cat: "ponchos" },
+        { codigo: "161", detalle: "BOINA DE PAÑO 34CM", cat: "ponchos" },
+        { codigo: "162", detalle: "PONCHO LIVIANO", cat: "ponchos" },
+        { codigo: "163", detalle: "PONCHO PESADO", cat: "ponchos" },
+        { codigo: "164", detalle: "PONCHO PESADO DOBLE TELA", cat: "ponchos" },
+        { codigo: "165", detalle: "PONCHO DE NIÑO LIVIANO TALLE 4", cat: "ponchos" },
+        { codigo: "166", detalle: "PONCHO DE NIÑO LIVIANO TALLE 8", cat: "ponchos" },
+        { codigo: "167", detalle: "PONCHO DE NIÑO TALLE 12 LIVIANO", cat: "ponchos" },
+        { codigo: "168", detalle: "BOMBACHAS DE GABARDINA PARA NIÑOS (DESDE TALLE 2 AL 16)", cat: "ponchos" },
+        { codigo: "169", detalle: "BOMBACHAS DE GABARDINA (DEL TALLE 40 AL 54)", cat: "ponchos" },
+        { codigo: "170", detalle: "PAÑUELO GAUCHOS ESTAMPADOS 70X70CM", cat: "accesorios" },
+        { codigo: "171", detalle: "PAÑUELO 70X70 CORBATERO", cat: "accesorios" },
+        { codigo: "172", detalle: "PAÑUELO 70X70 CABALLO", cat: "accesorios" },
+        { codigo: "173", detalle: "PAÑUELO DE BAILE 50X50", cat: "accesorios" },
+        { codigo: "174", detalle: "CORBATIN", cat: "accesorios" },
+        { codigo: "175", detalle: "ALPACA CON GUARDAPAMPA", cat: "accesorios" },
+        { codigo: "176", detalle: "ALPACA LISO", cat: "accesorios" },
+        { codigo: "177", detalle: "DE ALPACA CALADO", cat: "accesorios" },
+        { codigo: "178", detalle: "DE ALPACA Y ASTA", cat: "accesorios" },
+        { codigo: "179", detalle: "DE CUERO, CON COSTURA DE MAQUINA Y DIJE", cat: "accesorios" },
+        { codigo: "180", detalle: "DE COSTURA AL BORDE EN TIENTO Y DIJE", cat: "accesorios" },
+        { codigo: "181", detalle: "BOMBA DE TIENTO", cat: "accesorios" },
+        { codigo: "182", detalle: "BILLETERA DOLAR, DE CUERO ANILINA", cat: "accesorios" },
+        { codigo: "183", detalle: "BILLETERA DOLAR, CON VOLANTE", cat: "accesorios" },
+        { codigo: "184", detalle: "BILLETERA DOLAR, GUARDA PAMPA", cat: "accesorios" },
+        { codigo: "185", detalle: "BILLETERA FINA DE CUERO CON PELO", cat: "accesorios" },
+        { codigo: "186", detalle: "BILLETERA FINA DE CARPINCHO", cat: "accesorios" },
+        { codigo: "187", detalle: "TARJETERO FINO", cat: "accesorios" },
+        { codigo: "188", detalle: "CANASTA CUADRADA DE CUERO", cat: "hogar" },
+        { codigo: "189", detalle: "CANASTA CUADRADA CUERINA", cat: "hogar" },
+        { codigo: "190", detalle: "PORTATERMO SIMIL CARPINCHO/TELAR/FLOR", cat: "hogar" },
+        { codigo: "191", detalle: "PORTATERMO DE CUERO CRUDO", cat: "hogar" },
+        { codigo: "192", detalle: "PORTATERMO DE CUERO CON PELO", cat: "hogar" },
+        { codigo: "193", detalle: "PORTATERMO STANLEY DE CUERO CRUDO", cat: "hogar" },
+        { codigo: "194", detalle: "PORTATERMO STANLEY DE CUERO CON PELO", cat: "hogar" },
+        { codigo: "195", detalle: "BOLSA YERBERA DE CUERO", cat: "hogar" },
+        { codigo: "196", detalle: "LATAS X2 YERBA Y AZUCAR", cat: "hogar" },
+        { codigo: "197", detalle: "PORTA MATE PARA EL AUTO DE CUERO", cat: "hogar" },
+        { codigo: "198", detalle: "TERMO MEDIA MANIJA DE UN LITRO", cat: "hogar" },
+        { codigo: "199", detalle: "TERMO BALA DE UN LITRO", cat: "hogar" },
+        { codigo: "200", detalle: "TERMO BALA MEDIO LITRO", cat: "hogar" },
+        { codigo: "201", detalle: "YUNTA DE ALPACA Y ASTA", cat: "accesorios" },
+        { codigo: "202", detalle: "YUNTA DE ALPACA CALADA", cat: "accesorios" },
+        { codigo: "203", detalle: "HEBILLA CALADAS DE ALPACA", cat: "accesorios" },
+        { codigo: "204", detalle: "HEBILLA DE ALPACA Y ASTA", cat: "accesorios" },
+        { codigo: "205", detalle: "RELOJ ARGENTINO CHICO", cat: "hogar" },
+        { codigo: "206", detalle: "RELOJ ARGENTINA GRANDE", cat: "hogar" },
+        { codigo: "207", detalle: "RELOJ GUITARRA", cat: "hogar" },
+        { codigo: "208", detalle: "RELOJ HERRADURA", cat: "hogar" },
+        { codigo: "209", detalle: "RELOJ CUERO DE VACA", cat: "hogar" },
+        { codigo: "210", detalle: "RASTRA CHICA", cat: "rastras" },
+        { codigo: "211", detalle: "RASTRA MEDIANA", cat: "rastras" },
+        { codigo: "212", detalle: "RASTRA GRANDE", cat: "rastras" },
+        { codigo: "213", detalle: "ARGENTINA CUADRADA, DOBLE CUERO", cat: "hogar" },
+        { codigo: "214", detalle: "SET DE ASADO DE CUERO", cat: "hogar" },
+        { codigo: "215", detalle: "SET DE ASADO DE CUERO CON PELO", cat: "hogar" },
+        { codigo: "216", detalle: "PORTA VINO MONTURA", cat: "hogar" },
+        { codigo: "217", detalle: "PORTA VINO JARRITA DE PELO", cat: "hogar" },
+        { codigo: "218", detalle: "PORTA VINO DE CUERO GRUPON", cat: "hogar" },
+        { codigo: "219", detalle: "PORTA MINI FERNET DE CUERO", cat: "hogar" },
+        { codigo: "220", detalle: "VASO DE FERNET DE 1 LITRO", cat: "hogar" },
+        { codigo: "221", detalle: "JUEGO DE TRUCO EN CAJA", cat: "hogar" },
+        { codigo: "222", detalle: "JUEGO DE GENERALA EN CAJA", cat: "hogar" },
+        { codigo: "223", detalle: "JUEGO DE GENERALA Y TRUCO", cat: "hogar" },
+        { codigo: "224", detalle: "CUCHILLO CAPADOR ACERO INOX", cat: "accesorios" },
+        { codigo: "225", detalle: "CUCHILLO HOJA 10CM, DISCO DE ARADO, CABO COMBINADO", cat: "accesorios" },
+        { codigo: "226", detalle: "JUEGO DE CUBIERTOS HOJA DE 10CM ACERO INOX", cat: "accesorios" },
+        { codigo: "227", detalle: "JUEGO DE CUBIERTOS, HOJA 13CM, DE ACERO INOX", cat: "accesorios" },
+        { codigo: "228", detalle: "JUEGO DE CUBIERTOS, HOJA 16CM DE ACERO INOX", cat: "accesorios" },
+        { codigo: "229", detalle: "JUEGO DE CUBIERTOS, HOJA DE 13CM CABO COMBINADO", cat: "accesorios" },
+        { codigo: "230", detalle: "JUEGO DE CUBIERTOS, HOJA 16CM DE ACERO Y CABO TORNEADO", cat: "accesorios" },
+        { codigo: "231", detalle: "JUEGO CON CHAIRA, HOJA 16CM DE ACERO INOX, CABO COMBINADO", cat: "accesorios" },
+        { codigo: "232", detalle: "JUEGO PARRILLERO CON EXPULSADOR", cat: "accesorios" }
+    ];
+
+    let currentCategory = "todos";
+
+    function renderCatalog() {
+        const container = document.getElementById("productos-lista");
+        const filtered = currentCategory === "todos" ? productosRaw : productosRaw.filter(p => p.cat === currentCategory);
+        container.innerHTML = "";
+        filtered.forEach(prod => {
+            const row = document.createElement("div");
+            row.className = "grid-item";
+            
+            const codCell = document.createElement("div");
+            codCell.className = "producto-codigo";
+            codCell.innerText = prod.codigo;
+            
+            const detCell = document.createElement("div");
+            detCell.className = "producto-detalle";
+            detCell.innerText = prod.detalle;
+            
+            const fotoCell = document.createElement("div");
+            fotoCell.className = "producto-foto";
+            
+            const fotoUrl = fotosProductos[prod.codigo];
+            if (fotoUrl && fotoUrl !== "") {
+                const img = document.createElement("img");
+                img.src = fotoUrl;
+                img.alt = `Foto ${prod.codigo}`;
+                fotoCell.appendChild(img);
+            } else {
+                const sinFoto = document.createElement("div");
+                sinFoto.className = "sin-foto";
+                sinFoto.innerText = "📷 sin foto";
+                fotoCell.appendChild(sinFoto);
+            }
+            
+            row.appendChild(codCell);
+            row.appendChild(detCell);
+            row.appendChild(fotoCell);
+            container.appendChild(row);
+        });
+    }
+
+    function initFilters() {
+        const btns = document.querySelectorAll(".cat-btn");
+        btns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                btns.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                currentCategory = btn.getAttribute("data-cat");
+                renderCatalog();
+            });
+        });
+    }
+
+    renderCatalog();
+    initFilters();
+</script>
+</body>
+</html>
